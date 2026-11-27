@@ -1,0 +1,14 @@
+{
+  "name": "season-meter",
+  "version": "0.1.0",
+  "description": "A seasonal backdrop for the desktop app that fills up as the 5-hour session limit is used: snow, blossoms, birds or fallen leaves",
+  "userConfig": {
+    "hemisphere": {
+      "type": "string",
+      "title": "Hemisphere",
+      "description": "Which hemisphere's seasons the backdrop follows",
+      "default": "north",
+      "options": ["north", "south"]
+    }
+  }
+}
