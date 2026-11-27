@@ -1,0 +1,5 @@
+{
+  "name": "season-meter",
+  "owner": { "name": "Thisara-DE" },
+  "plugins": [{ "name": "season-meter", "source": "./" }]
+}
