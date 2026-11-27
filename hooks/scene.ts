@@ -174,6 +174,19 @@ function orb(progress: number): string {
   )
 }
 
+// The top of the winter snow at x. It drifts deep against the pines on the left and,
+// less so, on the right. Between them it stays shallow, so the snowman, the tree and
+// the house show for most of the window and a full drift only reaches the windows.
+export function driftTop(f: number, x: number): number {
+  const left = (x - 180) / (x < 180 ? 450 : 300)
+  const right = (x - 1600) / 170
+  const big = Math.exp(-left * left)
+  const small = Math.exp(-right * right)
+  const waves = (0.4 + 0.6 * Math.max(big, small)) * ((14 + 10 * f) * Math.sin(x / 170 + 1) + 9 * Math.sin(x / 61 + 3))
+
+  return GROUND - f * (480 * big + 300 * small) - Math.pow(f, 1.5) * 50 + waves
+}
+
 function winter(f: number): string {
   const random = rng(7)
   const pine = (x: number, h: number): string => {
@@ -254,18 +267,7 @@ function winter(f: number): string {
   for (let i = 0; i < 36; i++) {
     stars += `<circle class="f-star" cx="${n(sky() * W)}" cy="${n(20 + sky() * 400)}" r="${n(1 + sky() * 1.3)}" opacity="0.7"/>`
   }
-  // The snow drifts deep against the pines on the left and, less so, on the right.
-  // Between them it stays shallow, so the snowman, the tree and the house show for
-  // most of the window and a full drift only reaches the windows.
-  const top = (x: number): number => {
-    const left = (x - 180) / (x < 180 ? 450 : 300)
-    const right = (x - 1600) / 170
-    const big = Math.exp(-left * left)
-    const small = Math.exp(-right * right)
-    const waves = (0.4 + 0.6 * Math.max(big, small)) * ((14 + 10 * f) * Math.sin(x / 170 + 1) + 9 * Math.sin(x / 61 + 3))
-
-    return GROUND - f * (480 * big + 300 * small) - Math.pow(f, 1.5) * 50 + waves
-  }
+  const top = (x: number): number => driftTop(f, x)
   const flakes: string[] = []
   const count = Math.round(40 + f * 170)
 
@@ -298,6 +300,16 @@ function winter(f: number): string {
 
 const LEAF = '<path id="lf" d="M0,-9C7,-6 7,5 0,10C-7,5 -7,-6 0,-9Z"/>'
 
+// The top of the fall leaf pile at x: a mound under the tree. Far from the trunk it
+// stays shallow, so the pumpkins go under late and a full pile reaches half way up the barn.
+export function pileTop(f: number, x: number): number {
+  const away = (x - 1250) / (x < 1250 ? 300 : 450)
+  const mound = Math.exp(-away * away)
+  const waves = (0.3 + 0.7 * mound) * ((10 + 26 * f) * Math.sin(x / 210 + 2) + (6 + 10 * f) * Math.sin(x / 75))
+
+  return GROUND - f * 415 * mound - Math.pow(f, 1.5) * 85 + waves
+}
+
 function fall(f: number): string {
   const random = rng(11)
   const leaf = (x: number, y: number, scale: number): string =>
@@ -322,15 +334,7 @@ function fall(f: number): string {
     }
   }
 
-  // The pile is a mound under the tree. Far from the trunk it stays shallow, so the
-  // pumpkins go under late and a full pile reaches half way up the barn.
-  const top = (x: number): number => {
-    const away = (x - 1250) / (x < 1250 ? 300 : 450)
-    const mound = Math.exp(-away * away)
-    const waves = (0.3 + 0.7 * mound) * ((10 + 26 * f) * Math.sin(x / 210 + 2) + (6 + 10 * f) * Math.sin(x / 75))
-
-    return GROUND - f * 415 * mound - Math.pow(f, 1.5) * 85 + waves
-  }
+  const top = (x: number): number => pileTop(f, x)
   const pile: string[] = []
   const heaped = Math.round(f * 240)
 
@@ -429,6 +433,14 @@ function flowerHeads(): string {
   return defs
 }
 
+const isInPond = (x: number, y: number): boolean => ((x - 420) / 175) ** 2 + ((y - 852) / 48) ** 2 < 1
+
+// No flower grows in the pond: one that would is moved past its right bank.
+// The move is wider than the pond with its margin (350), so it cannot land back inside.
+export function clearOfPond(x: number, y: number): number {
+  return isInPond(x, y) ? x + 360 : x
+}
+
 function spring(f: number): string {
   const random = rng(23)
   const total = 72
@@ -439,9 +451,7 @@ function spring(f: number): string {
     const depth = Math.pow(random(), 0.8)
     const spot = random() * W
     const y = n(790 + 200 * depth)
-    // No flower grows in the pond.
-    const isInPond = ((spot - 420) / 175) ** 2 + ((y - 852) / 48) ** 2 < 1
-    const x = n(isInPond ? spot + 340 : spot)
+    const x = n(clearOfPond(spot, y))
     const scale = n(0.6 + depth * 0.9)
     const delay = n(random() * 14)
     const kind = 1 + Math.floor(random() * 4)
