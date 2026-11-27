@@ -11,18 +11,20 @@ A Claude Code mod that turns the desktop app's background into a seasonal scene 
 
 The sun, or the moon in dark mode, sinks toward the horizon as the reset time comes near.
 
+Each scene also has details that stay put and are slowly covered: a house, a lit Christmas tree and a snowman in winter; a pond, a tree in blossom and a rainbow in spring; a farmhouse, sunflowers and a kite in summer; a barn, pumpkins and a scarecrow in fall.
+
 ## What it looks like
 
 Each scene below is drawn at 65% of the session limit used. The pictures follow your light or dark mode, as the backdrop does.
 
 <table>
   <tr>
-    <td align="center"><img src="images/winter.svg" width="400" alt="Winter: a snow drift two thirds of the way up the screen, with snow falling"><br>Winter</td>
-    <td align="center"><img src="images/spring.svg" width="400" alt="Spring: a meadow with most of its flowers open and growing tall"><br>Spring</td>
+    <td align="center"><img src="images/winter.svg" width="400" alt="Winter: snow drifting high against the pines, with a snowman, a lit Christmas tree and a house in the hollow"><br>Winter</td>
+    <td align="center"><img src="images/spring.svg" width="400" alt="Spring: a meadow with most of its flowers open and growing tall, a pond, a tree in blossom and a rainbow"><br>Spring</td>
   </tr>
   <tr>
-    <td align="center"><img src="images/summer.svg" width="400" alt="Summer: birds perched along four telephone wires"><br>Summer</td>
-    <td align="center"><img src="images/fall.svg" width="400" alt="Fall: a tree that has lost most of its leaves to a deep pile below"><br>Fall</td>
+    <td align="center"><img src="images/summer.svg" width="400" alt="Summer: birds perched along four telephone wires above a farmhouse, sunflowers and hay bales"><br>Summer</td>
+    <td align="center"><img src="images/fall.svg" width="400" alt="Fall: a tree that has lost most of its leaves to a mound below, with a scarecrow, pumpkins and a barn"><br>Fall</td>
   </tr>
 </table>
 
